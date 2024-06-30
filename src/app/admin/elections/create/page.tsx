@@ -4,6 +4,9 @@
 import { useState } from "react";
 import Head from "next/head";
 import Navbar from "../../../components/Navbar";
+import AutocompleteCountry from "@src/app/components/AutocompleteCountry";
+
+const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
 const CreateElection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +14,12 @@ const CreateElection: React.FC = () => {
     description: "",
     startDate: "",
     endDate: "",
-    country: "",
+    country: 0,
+    candidates: [] as {
+      name: string;
+      picture: File | null;
+      symbol: File | null;
+    }[],
   });
 
   const handleInputChange = (
@@ -30,8 +38,140 @@ const CreateElection: React.FC = () => {
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-    console.log(formData);
-    // Add your form submission logic here
+
+    try {
+      const formDataToSend = new FormData();
+
+      formDataToSend.append(
+        "title",
+        formData.title
+      );
+      formDataToSend.append(
+        "description",
+        formData.description
+      );
+      formDataToSend.append(
+        "startDate",
+        formData.startDate
+      );
+      formDataToSend.append(
+        "endDate",
+        formData.endDate
+      );
+      formDataToSend.append(
+        "country",
+        formData.country.toString()
+      );
+
+      formData.candidates.forEach(
+        (candidate, index) => {
+          formDataToSend.append(
+            `candidates[${index}][name]`,
+            candidate.name
+          );
+          if (candidate.picture) {
+            formDataToSend.append(
+              `candidates[${index}][picture]`,
+              candidate.picture
+            );
+          }
+          if (candidate.symbol) {
+            formDataToSend.append(
+              `candidates[${index}][symbol]`,
+              candidate.symbol
+            );
+          }
+        }
+      );
+
+      const response = await fetch(
+        `${API_HOST}/api/elections`,
+        {
+          method: "POST",
+          body: formDataToSend,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      const data = await response.json();
+      console.log(
+        "Form submitted successfully:",
+        data
+      );
+      // Optionally reset form fields or show success message
+    } catch (error) {
+      console.error(
+        "Error submitting form:",
+        error
+      );
+      // Handle error state, show error message, etc.
+    }
+  };
+
+  const handleCandidateNameChange =
+    (index: number) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+      setFormData((prevData) => {
+        const candidates = [
+          ...prevData.candidates,
+        ];
+        candidates[index].name = value;
+        return { ...prevData, candidates };
+      });
+    };
+
+  const handleCandidatePictureChange =
+    (index: number) => (file: File | null) => {
+      setFormData((prevData) => {
+        const candidates = [
+          ...prevData.candidates,
+        ];
+        candidates[index].picture = file;
+        return { ...prevData, candidates };
+      });
+    };
+
+  const handleCandidateSymbolChange =
+    (index: number) => (file: File | null) => {
+      setFormData((prevData) => {
+        const candidates = [
+          ...prevData.candidates,
+        ];
+        candidates[index].symbol = file;
+        return { ...prevData, candidates };
+      });
+    };
+
+  const handleAddCandidate = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      candidates: [
+        ...prevData.candidates,
+        { name: "", picture: null, symbol: null },
+      ],
+    }));
+  };
+
+  const handleRemoveCandidate = (
+    index: number
+  ) => {
+    setFormData((prevData) => {
+      const candidates = [...prevData.candidates];
+      candidates.splice(index, 1);
+      return { ...prevData, candidates };
+    });
+  };
+
+  const handleCountrySelect = (
+    country: number
+  ) => {
+    setFormData((prevData) => {
+      return { ...prevData, country };
+    });
   };
 
   return (
@@ -49,8 +189,8 @@ const CreateElection: React.FC = () => {
 
       <main className="flex items-center justify-center py-20">
         <div className="container mx-auto">
-          <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
-            <h1 className="text-3xl font-semibold mb-4 px-6 py-4 bg-gray-200 border-b border-gray-300">
+          <div className="max-w-4xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg ">
+            <h1 className="text-sm font-semibold mb-4 px-6 py-4 bg-gray-200 border-b border-gray-300">
               Add Election
             </h1>
             <form
@@ -81,41 +221,121 @@ const CreateElection: React.FC = () => {
                   rows={4}
                 ></textarea>
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-semibold mb-1">
-                  Start Date:
-                </label>
-                <input
-                  type="date"
-                  name="startDate"
-                  value={formData.startDate}
-                  onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-2"
-                />
-              </div>
-              <div className="mb-4">
-                <label className="block text-sm font-semibold mb-1">
-                  End Date:
-                </label>
-                <input
-                  type="date"
-                  name="endDate"
-                  value={formData.endDate}
-                  onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-2"
-                />
+              <div className="grid sm:grid-cols-6 grid-cols-1 gap-x-6 gap-y-8">
+                <div className="sm:col-span-3">
+                  <label className="block text-sm font-semibold mb-1">
+                    Start Date:
+                  </label>
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={formData.startDate}
+                    onChange={handleInputChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+                <div className="sm:col-span-3 mb-4">
+                  <label className="block text-sm font-semibold mb-1">
+                    End Date:
+                  </label>
+                  <input
+                    type="date"
+                    name="endDate"
+                    value={formData.endDate}
+                    onChange={handleInputChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
               </div>
               <div className="mb-4">
                 <label className="block text-sm font-semibold mb-1">
                   Country:
                 </label>
-                <input
-                  type="text"
-                  name="country"
-                  value={formData.country}
-                  onChange={handleInputChange}
-                  className="w-full border border-gray-300 rounded px-3 py-2"
+                <AutocompleteCountry
+                  onCountrySelect={
+                    handleCountrySelect
+                  }
                 />
+              </div>
+              <div>
+                <div className="mb-4">
+                  <label className="block text-sm font-semibold mb-1">
+                    Candidates:
+                  </label>
+                  {formData.candidates.map(
+                    (candidate, index) => (
+                      <div
+                        key={index}
+                        className="mb-4"
+                      >
+                        <label className="text-sm font-semibold mb-1">
+                          Candidate {index + 1}{" "}
+                          Name:
+                        </label>
+                        <input
+                          type="text"
+                          value={candidate.name}
+                          onChange={handleCandidateNameChange(
+                            index
+                          )}
+                          className="w-full border border-gray-300 rounded px-3 py-2"
+                        />
+                        {/* Input for picture */}
+                        <label className="text-sm font-semibold mb-1">
+                          Picture:
+                        </label>
+                        <input
+                          type="file"
+                          onChange={(e) =>
+                            handleCandidatePictureChange(
+                              index
+                            )(
+                              e.target
+                                .files?.[0] ||
+                                null
+                            )
+                          }
+                          className="mt-2"
+                        />
+                        {/* Input for symbol */}
+                        <label className="text-sm font-semibold mb-1">
+                          Symbol:
+                        </label>
+                        <input
+                          type="file"
+                          onChange={(e) =>
+                            handleCandidateSymbolChange(
+                              index
+                            )(
+                              e.target
+                                .files?.[0] ||
+                                null
+                            )
+                          }
+                          className="mt-2"
+                        />
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleRemoveCandidate(
+                              index
+                            )
+                          }
+                          className="mt-2 bg-red-500 text-white px-2 py-1 rounded"
+                        >
+                          -
+                        </button>
+                      </div>
+                    )
+                  )}
+                  <button
+                    type="button"
+                    onClick={handleAddCandidate}
+                    className="bg-green-500 text-white px-4 py-2 rounded"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
               <button
                 type="submit"
