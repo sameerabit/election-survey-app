@@ -2,23 +2,31 @@
 
 import { useState, useEffect } from "react";
 
-interface Country {
+export interface Country {
   id: number;
   name: string;
 }
 
 const AutocompleteCountry: React.FC<{
   onCountrySelect: (country: number) => void;
-}> = ({ onCountrySelect }) => {
+  initialCountry: Country;
+}> = ({ onCountrySelect, initialCountry }) => {
   const API_HOST =
     process.env.NEXT_PUBLIC_API_HOST;
-
-  const [inputValue, setInputValue] =
-    useState("");
 
   const [options, setOptions] = useState<
     Country[]
   >([]);
+
+  const [inputValue, setInputValue] = useState(
+    initialCountry.name ? initialCountry.name : ""
+  );
+
+  useEffect(() => {
+    initialCountry.name &&
+      setInputValue(initialCountry.name);
+  }, [initialCountry]);
+
   const [loading, setLoading] = useState(false);
   const [showOptions, setShowOptions] =
     useState(false);

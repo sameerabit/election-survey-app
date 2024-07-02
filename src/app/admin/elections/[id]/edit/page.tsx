@@ -1,20 +1,29 @@
-// pages/admin/elections.tsx
-
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
-import Navbar from "../../../components/Navbar";
-import AutocompleteCountry from "@src/app/components/AutocompleteCountry";
+import Navbar from "../../../../components/Navbar";
+import AutocompleteCountry, {
+  Country,
+} from "../../../../components/AutocompleteCountry";
+import { format } from "date-fns";
+import Candidates from "@src/app/admin/candidates/page";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
-const CreateElection: React.FC = () => {
+const EditElection: React.FC = ({
+  params,
+}: {
+  params: { id: string };
+}) => {
+  const id = params.id;
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     startDate: "",
     endDate: "",
-    country: 0,
+    country: {} as Country,
+    countryId: 0,
     candidates: [] as {
       name: string;
       picture: File | null;
@@ -23,6 +32,44 @@ const CreateElection: React.FC = () => {
       symbolPreview: string | null;
     }[],
   });
+
+  useEffect(() => {
+    if (id) {
+      fetch(`${API_HOST}/api/elections/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          data.candidates.forEach((candidate) => {
+            candidate["picturePreview"] =
+              candidate.picture
+                ? API_HOST +
+                  "/uploads/" +
+                  candidate.picture
+                : null;
+            candidate["symbolPreview"] =
+              candidate.symbol
+                ? API_HOST +
+                  "/uploads/" +
+                  candidate.symbol
+                : null;
+          });
+          data.startDate = format(
+            new Date(data.startDate),
+            "yyyy-MM-dd"
+          );
+          data.endDate = format(
+            new Date(data.endDate),
+            "yyyy-MM-dd"
+          );
+          setFormData(data);
+        })
+        .catch((error) => {
+          console.error(
+            "Error fetching election data:",
+            error
+          );
+        });
+    }
+  }, [id]);
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -87,9 +134,9 @@ const CreateElection: React.FC = () => {
       );
 
       const response = await fetch(
-        `${API_HOST}/api/elections`,
+        `${API_HOST}/api/elections/${id}`,
         {
-          method: "POST",
+          method: "PUT",
           body: formDataToSend,
         }
       );
@@ -133,7 +180,6 @@ const CreateElection: React.FC = () => {
           ...prevData.candidates,
         ];
         candidates[index].picture = file;
-        // Display preview of the image
         if (file) {
           const reader = new FileReader();
           reader.onloadend = () => {
@@ -158,7 +204,6 @@ const CreateElection: React.FC = () => {
         const candidates = [
           ...prevData.candidates,
         ];
-        candidates[index].symbol = file;
         if (file) {
           const reader = new FileReader();
           reader.onloadend = () => {
@@ -173,6 +218,7 @@ const CreateElection: React.FC = () => {
         } else {
           candidates[index].symbolPreview = null;
         }
+        candidates[index].symbol = file;
         return { ...prevData, candidates };
       });
     };
@@ -214,10 +260,12 @@ const CreateElection: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <Head>
-        <title>Elections - Admin Dashboard</title>
+        <title>
+          Edit Election - Admin Dashboard
+        </title>
         <meta
           name="description"
-          content="View and manage elections."
+          content="Edit election details."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -228,7 +276,7 @@ const CreateElection: React.FC = () => {
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg ">
             <h1 className="text-sm font-semibold mb-4 px-6 py-4 bg-gray-200 border-b border-gray-300">
-              Add Election
+              Edit Election
             </h1>
             <form
               onSubmit={handleFormSubmit}
@@ -291,6 +339,9 @@ const CreateElection: React.FC = () => {
                 <AutocompleteCountry
                   onCountrySelect={
                     handleCountrySelect
+                  }
+                  initialCountry={
+                    formData.country
                   }
                 />
               </div>
@@ -401,7 +452,7 @@ const CreateElection: React.FC = () => {
                 type="submit"
                 className="bg-blue-500 text-white px-4 py-2 rounded"
               >
-                Add Election
+                Update Election
               </button>
             </form>
           </div>
@@ -411,4 +462,4 @@ const CreateElection: React.FC = () => {
   );
 };
 
-export default CreateElection;
+export default EditElection;
