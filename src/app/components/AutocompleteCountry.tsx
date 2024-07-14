@@ -19,11 +19,14 @@ const AutocompleteCountry: React.FC<{
   >([]);
 
   const [inputValue, setInputValue] = useState(
-    initialCountry.name ? initialCountry.name : ""
+    initialCountry && initialCountry.name
+      ? initialCountry.name
+      : ""
   );
 
   useEffect(() => {
-    initialCountry.name &&
+    initialCountry &&
+      initialCountry.name &&
       setInputValue(initialCountry.name);
   }, [initialCountry]);
 

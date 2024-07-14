@@ -25,6 +25,7 @@ const EditElection: React.FC = ({
     country: {} as Country,
     countryId: 0,
     candidates: [] as {
+      id: string;
       name: string;
       picture: File | null;
       symbol: File | null;
@@ -91,6 +92,8 @@ const EditElection: React.FC = ({
     try {
       const formDataToSend = new FormData();
 
+      console.log(formData.country);
+
       formDataToSend.append(
         "title",
         formData.title
@@ -109,11 +112,15 @@ const EditElection: React.FC = ({
       );
       formDataToSend.append(
         "country",
-        formData.country.toString()
+        formData.country.id.toString()
       );
 
       formData.candidates.forEach(
         (candidate, index) => {
+          formDataToSend.append(
+            `candidates[${index}][id]`,
+            candidate.id
+          );
           formDataToSend.append(
             `candidates[${index}][name]`,
             candidate.name

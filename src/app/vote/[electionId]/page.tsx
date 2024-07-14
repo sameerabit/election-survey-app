@@ -1,0 +1,238 @@
+// pages/vote.tsx
+
+"use client";
+import { useEffect, useState } from "react";
+import Head from "next/head";
+import Navbar from "../../components/Navbar";
+import Image from "next/image";
+
+const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
+
+const Vote: React.FC = ({
+  params,
+}: {
+  params: { electionId: string };
+}) => {
+  const id = params.electionId;
+
+  const [elections, setElections] = useState([]);
+  const [candidates, setCandidates] = useState(
+    []
+  );
+  const [
+    selectedCandidate,
+    setSelectedCandidate,
+  ] = useState(0);
+
+  const [showConfirmation, setShowConfirmation] =
+    useState(false);
+
+  const handleCandidateChange = (
+    candidateId: number
+  ) => {
+    setSelectedCandidate(candidateId);
+    setShowConfirmation(true); // Show confirmation popup
+  };
+
+  useEffect(() => {
+    if (id !== null) {
+      const fetchCandidates = async () => {
+        try {
+          const response = await fetch(
+            `${API_HOST}/api/elections/${id}/candidates`
+          );
+          if (!response.ok) {
+            throw new Error(
+              "Failed to fetch candidates"
+            );
+          }
+          const data = await response.json();
+          data.forEach((candidate) => {
+            candidate["picturePreview"] =
+              candidate.picture
+                ? API_HOST +
+                  "/uploads/" +
+                  candidate.picture
+                : null;
+            candidate["symbolPreview"] =
+              candidate.symbol
+                ? API_HOST +
+                  "/uploads/" +
+                  candidate.symbol
+                : null;
+          });
+          console.log(data);
+          setCandidates(data);
+        } catch (error) {
+          console.error(
+            "Error fetching candidates:",
+            error
+          );
+        }
+      };
+
+      fetchCandidates();
+    }
+  }, [id]);
+
+  const handleConfirmVote = async () => {
+    if (
+      id === null ||
+      selectedCandidate === null
+    ) {
+      console.error(
+        "Election or candidate not selected"
+      );
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `${API_HOST}/api/votes`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            electionId: id,
+            candidateId: selectedCandidate,
+            userId: 1, // Replace with actual user ID from authentication context
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to cast vote");
+      }
+
+      const data = await response.json();
+      console.log(
+        "Vote cast successfully:",
+        data
+      );
+    } catch (error) {
+      console.error("Error casting vote:", error);
+    }
+  };
+
+  const handleCancelVote = () => {
+    setShowConfirmation(false);
+    setSelectedCandidate(null);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100">
+      <Head>
+        <title>Cast Vote</title>
+        <meta
+          name="description"
+          content="Cast your vote in the election."
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <Navbar />
+
+      <main className="flex items-center justify-center py-20">
+        <div className="container mx-auto">
+          <div className="max-w-4xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
+            <h1 className="text-sm font-semibold mb-4 px-6 py-4 bg-gray-200 border-b border-gray-300">
+              Cast Your Vote
+            </h1>
+            <form className="p-6">
+              {id !== null && (
+                <div className="mb-4">
+                  <label className="block text-sm font-semibold mb-1">
+                    Select Candidate:
+                  </label>
+                  <div className="my-6">
+                    {candidates.map(
+                      (candidate) => (
+                        <label
+                          key={candidate.id}
+                          className="flex flex-row items-center space-x-2 cursor-pointer my-7"
+                        >
+                          <div className="flex space-x-4 items-center justify-center">
+                            {candidate.picture && (
+                              <Image
+                                src={
+                                  candidate.picturePreview
+                                }
+                                alt={`${candidate.name}'s picture`}
+                                className="md:w-16 md:h-16  object-cover basis-1/4"
+                                width={64}
+                                height={64}
+                              />
+                            )}
+                            <span className="md:text-3xl md:min-w-96 font-semibold">
+                              {candidate.name}
+                            </span>
+                            {/* {candidate.symbol && (
+                              <Image
+                                src={
+                                  candidate.symbolPreview
+                                }
+                                alt={`${candidate.name}'s symbol`}
+                                className="w-16 h-16 object-cover"
+                                width={64}
+                                height={64}
+                              />
+                            )} */}
+                            <input
+                              type="checkbox"
+                              checked={
+                                selectedCandidate ===
+                                candidate.id
+                              }
+                              onChange={() =>
+                                handleCandidateChange(
+                                  candidate.id
+                                )
+                              }
+                              className="form-checkbox w-12 h-12"
+                            />
+                          </div>
+                        </label>
+                      )
+                    )}
+                  </div>
+                </div>
+              )}
+            </form>
+          </div>
+        </div>
+      </main>
+
+      {showConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg overflow-hidden shadow-lg p-6">
+            <h2 className="text-lg font-semibold mb-4">
+              Confirm Your Vote
+            </h2>
+            <p>
+              Are you sure you want to vote for
+              this candidate?
+            </p>
+            <div className="mt-4 flex justify-end space-x-2">
+              <button
+                onClick={handleConfirmVote}
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+              >
+                Confirm
+              </button>
+              <button
+                onClick={handleCancelVote}
+                className="bg-gray-300 text-black px-4 py-2 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Vote;
