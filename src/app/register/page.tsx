@@ -4,6 +4,8 @@ import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Link from "next/link";
 
+const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
+
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -31,7 +33,7 @@ const Register: React.FC = () => {
 
     try {
       const response = await fetch(
-        "/api/register",
+        `${API_HOST}/api/users`,
         {
           method: "POST",
           headers: {
@@ -160,9 +162,7 @@ const Register: React.FC = () => {
               >
                 I agree to the{" "}
                 <Link href="/terms" passHref>
-                  <a className="text-indigo-600 hover:text-indigo-500">
-                    Terms and Conditions
-                  </a>
+                  Terms and Conditions
                 </Link>
               </label>
             </div>
