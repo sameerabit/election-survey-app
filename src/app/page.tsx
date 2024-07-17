@@ -2,17 +2,21 @@
 import Head from "next/head";
 import Link from "next/link";
 import Navbar from "./components/Navbar";
+import Image from "next/image";
 
 const Home: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div
+      style={{
+        backgroundImage: "url('/bg/bg.png')",
+      }}
+      className="min-h-screen bg-gray-100 bg-cover bg-center"
+    >
       <Head>
-        <title>
-          Pre-Election Survey - Sri Lanka
-        </title>
+        <title>Survey - Sri Lanka</title>
         <meta
           name="description"
-          content="Participate in the pre-election survey for Sri Lanka."
+          content="Participate in the surveys for Sri Lanka."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -22,13 +26,13 @@ const Home: React.FC = () => {
       <main className="flex items-center justify-center py-20">
         <div className="w-full max-w-4xl p-8 space-y-8 bg-white rounded-lg shadow-md">
           <h1 className="text-4xl font-bold text-center text-indigo-600">
-            Pre-Election Survey - Sri Lanka
+            Survey - Sri Lanka
           </h1>
           <p className="text-lg text-center text-gray-700">
-            Welcome to the pre-election survey for
-            Sri Lanka. Your opinion matters. Help
-            us understand the pulse of the nation
-            by participating in our survey.
+            Welcome to the surveys for Sri Lanka.
+            Your opinion matters. Help us
+            understand the pulse of the nation by
+            participating in our survey.
           </p>
           <div className="flex justify-center space-x-4">
             <Link

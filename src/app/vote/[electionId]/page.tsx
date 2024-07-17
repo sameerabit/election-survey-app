@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import Navbar from "../../components/Navbar";
 import Image from "next/image";
+import { useAuth } from "@src/app/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
@@ -19,6 +21,18 @@ const Vote: React.FC = ({
   const [candidates, setCandidates] = useState(
     []
   );
+  const [election, setElection] = useState({});
+  const { loginUser } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    const loggedInUser = loginUser();
+    console.log(loggedInUser);
+    if (!loggedInUser) {
+      // router.push("/login");
+    }
+  }, [loginUser]);
+
   const [
     selectedCandidate,
     setSelectedCandidate,
@@ -26,6 +40,14 @@ const Vote: React.FC = ({
 
   const [showConfirmation, setShowConfirmation] =
     useState(false);
+
+  const [showMessageBox, setShowMessageBox] =
+    useState(false);
+
+  const [afterVoteMessage, setAfterVoteMessage] =
+    useState(
+      "You have voted successfully. Thanks for Voting!"
+    );
 
   const handleCandidateChange = (
     candidateId: number
@@ -39,7 +61,7 @@ const Vote: React.FC = ({
       const fetchCandidates = async () => {
         try {
           const response = await fetch(
-            `${API_HOST}/api/elections/${id}/candidates`
+            `${API_HOST}/api/elections/${id}`
           );
           if (!response.ok) {
             throw new Error(
@@ -47,7 +69,8 @@ const Vote: React.FC = ({
             );
           }
           const data = await response.json();
-          data.forEach((candidate) => {
+          setElection(data);
+          data.candidates.forEach((candidate) => {
             candidate["picturePreview"] =
               candidate.picture
                 ? API_HOST +
@@ -61,8 +84,7 @@ const Vote: React.FC = ({
                   candidate.symbol
                 : null;
           });
-          console.log(data);
-          setCandidates(data);
+          setCandidates(data.candidates);
         } catch (error) {
           console.error(
             "Error fetching candidates:",
@@ -97,13 +119,15 @@ const Vote: React.FC = ({
           body: JSON.stringify({
             electionId: id,
             candidateId: selectedCandidate,
-            userId: 1, // Replace with actual user ID from authentication context
+            userId: loginUser()?.id, // Replace with actual user ID from authentication context
           }),
         }
       );
 
       if (!response.ok) {
-        throw new Error("Failed to cast vote");
+        throw new Error(
+          "You have voted before. Thanks for voting!"
+        );
       }
 
       const data = await response.json();
@@ -111,14 +135,20 @@ const Vote: React.FC = ({
         "Vote cast successfully:",
         data
       );
-    } catch (error) {
-      console.error("Error casting vote:", error);
+    } catch (error: any) {
+      handleCancelVote();
+      setShowMessageBox(true);
+      setAfterVoteMessage(error.message);
     }
   };
 
   const handleCancelVote = () => {
     setShowConfirmation(false);
     setSelectedCandidate(null);
+  };
+
+  const handleCancelMessageBox = () => {
+    setShowConfirmation(false);
   };
 
   return (
@@ -140,6 +170,10 @@ const Vote: React.FC = ({
             <h1 className="text-sm font-semibold mb-4 px-6 py-4 bg-gray-200 border-b border-gray-300">
               Cast Your Vote
             </h1>
+            <h2 className="p-6 font-serif font-bold from-stone-950 text-3xl">
+              {election.title}
+            </h2>
+
             <form className="p-6">
               {id !== null && (
                 <div className="mb-4">
@@ -226,6 +260,25 @@ const Vote: React.FC = ({
                 className="bg-gray-300 text-black px-4 py-2 rounded"
               >
                 Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showMessageBox && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg overflow-hidden shadow-lg p-6">
+            <h2 className="text-lg font-semibold mb-4">
+              Done!
+            </h2>
+            <p>{afterVoteMessage}</p>
+            <div className="mt-4 flex justify-end space-x-2">
+              <button
+                onClick={handleCancelMessageBox}
+                className="bg-gray-300 text-black px-4 py-2 rounded"
+              >
+                Results
               </button>
             </div>
           </div>
