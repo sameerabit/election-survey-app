@@ -142,6 +142,11 @@ const Vote: React.FC = ({
     }
   };
 
+  const handleSeeReults = () => {
+    setShowMessageBox(false);
+    router.push(`/vote/${id}/result`);
+  };
+
   const handleCancelVote = () => {
     setShowConfirmation(false);
     setSelectedCandidate(null);
@@ -275,7 +280,7 @@ const Vote: React.FC = ({
             <p>{afterVoteMessage}</p>
             <div className="mt-4 flex justify-end space-x-2">
               <button
-                onClick={handleCancelMessageBox}
+                onClick={handleSeeReults}
                 className="bg-gray-300 text-black px-4 py-2 rounded"
               >
                 Results

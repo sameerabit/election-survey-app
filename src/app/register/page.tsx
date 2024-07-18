@@ -3,10 +3,12 @@ import { useState } from "react";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
 const Register: React.FC = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -50,7 +52,7 @@ const Register: React.FC = () => {
       }
 
       // Handle successful registration, e.g., redirect or show success message
-      console.log("Registration successful");
+      router.push("/login");
     } catch (error) {
       console.error(
         "Error registering user:",
