@@ -42,10 +42,10 @@ const Home: React.FC = () => {
               Take the Survey
             </Link>
             <Link
-              href="/login"
+              href="/register"
               className="px-8 py-3 text-lg font-medium text-white bg-gray-600 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
             >
-              Login
+              Register
             </Link>
           </div>
           <div className="pt-6 border-t border-gray-200">

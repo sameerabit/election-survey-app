@@ -167,37 +167,7 @@ const Candidates: React.FC = () => {
                 )}
               </tbody>
             </table>
-            <div className="mt-4">
-              <ul className="flex list-none">
-                {[
-                  ...Array(
-                    Math.ceil(
-                      candidates.length /
-                        candidatesPerPage
-                    )
-                  ).keys(),
-                ].map((pageNumber) => (
-                  <li
-                    key={pageNumber}
-                    className="mr-1"
-                  >
-                    <button
-                      onClick={() =>
-                        paginate(pageNumber + 1)
-                      }
-                      className={`px-3 py-1 rounded ${
-                        currentPage ===
-                        pageNumber + 1
-                          ? "bg-blue-500 text-white"
-                          : "bg-gray-200"
-                      }`}
-                    >
-                      {pageNumber + 1}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <div className="mt-4"></div>
           </div>
           {/* Candidate management components go here */}
         </div>

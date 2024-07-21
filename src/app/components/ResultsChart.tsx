@@ -56,13 +56,14 @@ const ResultsChart: React.FC<{
   // Prepare data for the chart
   const chartData: ChartData = {
     labels: results.candidates.map(
-      (candidate) => candidate.name
+      (candidate: any) => candidate.name
     ),
     datasets: [
       {
         label: "Votes",
         data: results.candidates.map(
-          (candidate) => candidate._count.Vote
+          (candidate: any) =>
+            candidate._count.Vote
         ),
         backgroundColor:
           "rgba(75, 192, 192, 0.2)",
@@ -97,7 +98,8 @@ const ResultsChart: React.FC<{
     datasets: [
       {
         data: results.candidates.map(
-          (candidate) => candidate._count.Vote
+          (candidate: any) =>
+            candidate._count.Vote
         ),
         backgroundColor: results.candidates.map(
           () => getRandomColor()
@@ -128,7 +130,7 @@ const ResultsChart: React.FC<{
           label: function (tooltipItem: any) {
             const totalVotes =
               results.candidates.reduce(
-                (acc, candidate) =>
+                (acc, candidate: any) =>
                   acc + candidate._count.Vote,
                 0
               );
@@ -146,9 +148,9 @@ const ResultsChart: React.FC<{
   return (
     <div>
       <h2 className="text-xl font-bold mb-4">
-        {results.title}
+        Visualization
       </h2>
-      <div className="flex items-center justify-center space-x-10">
+      <div className="md:flex items-center justify-center space-x-10">
         <div className="flex items-start justify-start">
           <Bar
             data={chartData}

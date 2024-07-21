@@ -10,7 +10,11 @@ import { useRouter } from "next/navigation";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
-const Vote: React.FC = ({
+interface Vote {
+  params: { electionId: string };
+}
+
+const Vote: React.FC<Vote> = ({
   params,
 }: {
   params: { electionId: string };
@@ -21,17 +25,17 @@ const Vote: React.FC = ({
   const [candidates, setCandidates] = useState(
     []
   );
-  const [election, setElection] = useState({});
-  const { loginUser } = useAuth();
+  const [election, setElection] = useState(
+    {} as any
+  );
+  const { user } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    const loggedInUser = loginUser();
-    console.log(loggedInUser);
-    if (!loggedInUser) {
-      // router.push("/login");
+    if (user && !user.id) {
+      router.push("/login");
     }
-  }, [loginUser]);
+  }, []);
 
   const [
     selectedCandidate,
@@ -70,20 +74,22 @@ const Vote: React.FC = ({
           }
           const data = await response.json();
           setElection(data);
-          data.candidates.forEach((candidate) => {
-            candidate["picturePreview"] =
-              candidate.picture
-                ? API_HOST +
-                  "/uploads/" +
-                  candidate.picture
-                : null;
-            candidate["symbolPreview"] =
-              candidate.symbol
-                ? API_HOST +
-                  "/uploads/" +
-                  candidate.symbol
-                : null;
-          });
+          data.candidates.forEach(
+            (candidate: any) => {
+              candidate["picturePreview"] =
+                candidate.picture
+                  ? API_HOST +
+                    "/uploads/" +
+                    candidate.picture
+                  : null;
+              candidate["symbolPreview"] =
+                candidate.symbol
+                  ? API_HOST +
+                    "/uploads/" +
+                    candidate.symbol
+                  : null;
+            }
+          );
           setCandidates(data.candidates);
         } catch (error) {
           console.error(
@@ -119,7 +125,7 @@ const Vote: React.FC = ({
           body: JSON.stringify({
             electionId: id,
             candidateId: selectedCandidate,
-            userId: loginUser()?.id, // Replace with actual user ID from authentication context
+            userId: user?.id, // Replace with actual user ID from authentication context
           }),
         }
       );
@@ -135,6 +141,11 @@ const Vote: React.FC = ({
         "Vote cast successfully:",
         data
       );
+      handleCancelVote();
+      setShowMessageBox(true);
+      setAfterVoteMessage(
+        "Vote cast successfully!"
+      );
     } catch (error: any) {
       handleCancelVote();
       setShowMessageBox(true);
@@ -149,7 +160,7 @@ const Vote: React.FC = ({
 
   const handleCancelVote = () => {
     setShowConfirmation(false);
-    setSelectedCandidate(null);
+    setSelectedCandidate(0);
   };
 
   const handleCancelMessageBox = () => {
@@ -187,7 +198,7 @@ const Vote: React.FC = ({
                   </label>
                   <div className="my-6">
                     {candidates.map(
-                      (candidate) => (
+                      (candidate: any) => (
                         <label
                           key={candidate.id}
                           className="flex flex-row items-center space-x-2 cursor-pointer my-7"

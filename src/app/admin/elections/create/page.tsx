@@ -4,7 +4,9 @@
 import { useState } from "react";
 import Head from "next/head";
 import Navbar from "../../../components/Navbar";
-import AutocompleteCountry from "@src/app/components/AutocompleteCountry";
+import AutocompleteCountry, {
+  Country,
+} from "@src/app/components/AutocompleteCountry";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
@@ -291,6 +293,11 @@ const CreateElection: React.FC = () => {
                 <AutocompleteCountry
                   onCountrySelect={
                     handleCountrySelect
+                  }
+                  initialCountry={
+                    {
+                      id: 0,
+                    } as unknown as Country
                   }
                 />
               </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
 
 const Navbar: React.FC = () => {
-  const { logout, loginUser } = useAuth();
+  const { logout, user } = useAuth();
   return (
     <nav className="bg-indigo-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,12 +24,12 @@ const Navbar: React.FC = () => {
             >
               Take the Survey
             </Link>
-            {loginUser()?.username ? (
+            {user?.username ? (
               <Link
                 href="#profile"
                 className="px-3 py-2 text-sm font-medium text-white bg-gray-500 rounded-md hover:bg-gray-700"
               >
-                Hi!, {loginUser()?.username}
+                Hi!, {user?.username}
               </Link>
             ) : (
               <Link
@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
                 Login
               </Link>
             )}
-            {loginUser()?.username ? (
+            {user?.username ? (
               <button
                 onClick={logout}
                 className="text-white"

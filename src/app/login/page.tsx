@@ -154,6 +154,17 @@ const Login: React.FC = () => {
                 </a>
               </div>
             </div>
+            <div className="flex items-center justify-between">
+              <div className="text-sm">
+                <a
+                  href="register"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                >
+                  Click to Sign up! if you are not
+                  already registered.
+                </a>
+              </div>
+            </div>
             <div>
               <button
                 disabled={loading}

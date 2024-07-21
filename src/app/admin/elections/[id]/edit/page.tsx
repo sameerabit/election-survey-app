@@ -7,14 +7,19 @@ import AutocompleteCountry, {
 } from "../../../../components/AutocompleteCountry";
 import { format } from "date-fns";
 import Candidates from "@src/app/admin/candidates/page";
+import Image from "next/image";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
-const EditElection: React.FC = ({
-  params,
-}: {
-  params: { id: string };
-}) => {
+interface EditElectionProps {
+  params: {
+    id: string;
+  };
+}
+
+const EditElection: React.FC<
+  EditElectionProps
+> = ({ params }: { params: { id: string } }) => {
   const id = params.id;
 
   const [formData, setFormData] = useState({
@@ -39,20 +44,22 @@ const EditElection: React.FC = ({
       fetch(`${API_HOST}/api/elections/${id}`)
         .then((response) => response.json())
         .then((data) => {
-          data.candidates.forEach((candidate) => {
-            candidate["picturePreview"] =
-              candidate.picture
-                ? API_HOST +
-                  "/uploads/" +
-                  candidate.picture
-                : null;
-            candidate["symbolPreview"] =
-              candidate.symbol
-                ? API_HOST +
-                  "/uploads/" +
-                  candidate.symbol
-                : null;
-          });
+          data.candidates.forEach(
+            (candidate: any) => {
+              candidate["picturePreview"] =
+                candidate.picture
+                  ? API_HOST +
+                    "/uploads/" +
+                    candidate.picture
+                  : null;
+              candidate["symbolPreview"] =
+                candidate.symbol
+                  ? API_HOST +
+                    "/uploads/" +
+                    candidate.symbol
+                  : null;
+            }
+          );
           data.startDate = format(
             new Date(data.startDate),
             "yyyy-MM-dd"
@@ -231,7 +238,7 @@ const EditElection: React.FC = ({
     };
 
   const handleAddCandidate = () => {
-    setFormData((prevData) => ({
+    setFormData((prevData: any) => ({
       ...prevData,
       candidates: [
         ...prevData.candidates,
@@ -259,7 +266,7 @@ const EditElection: React.FC = ({
   const handleCountrySelect = (
     country: number
   ) => {
-    setFormData((prevData) => {
+    setFormData((prevData: any) => {
       return { ...prevData, country };
     });
   };
@@ -406,7 +413,7 @@ const EditElection: React.FC = ({
                         {/* Display preview for symbol */}
                         {candidate.symbolPreview && (
                           <div className="mt-2">
-                            <img
+                            <Image
                               src={
                                 candidate.symbolPreview
                               }

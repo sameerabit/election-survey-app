@@ -14,6 +14,17 @@ export type User = {
   id: string;
 };
 
+export const isBrowser = (): boolean => {
+  return typeof window !== "undefined";
+};
+
+export const nextLocalStorage =
+  (): Storage | void => {
+    if (isBrowser()) {
+      return window.localStorage;
+    }
+  };
+
 interface AuthContextType {
   accessToken: string | null;
   refreshToken: string | null;
@@ -24,7 +35,7 @@ interface AuthContextType {
   clearTokens: () => void;
   logout: () => void;
   setLoginUser: (user: User) => void;
-  loginUser: () => User | null;
+  user: User | null;
 }
 
 const AuthContext = createContext<
@@ -40,18 +51,20 @@ export const AuthProvider: React.FC<{
   const [refreshToken, setRefreshToken] =
     useState<string | null>(null);
   const [user, setUser] = useState<User | null>(
-    null
+    JSON.parse(
+      nextLocalStorage?.getItem("user") as string
+    ) as User
   );
   const router = useRouter();
 
   useEffect(() => {
     // Load tokens and user from local storage on initial load
     const storedAccessToken =
-      localStorage.getItem("accessToken");
+      nextLocalStorage.getItem("accessToken");
     const storedRefreshToken =
-      localStorage.getItem("refreshToken");
+      nextLocalStorage.getItem("refreshToken");
     const storedUser =
-      localStorage.getItem("user");
+      nextLocalStorage.getItem("user");
 
     if (
       storedAccessToken &&
@@ -71,11 +84,13 @@ export const AuthProvider: React.FC<{
     ) => {
       setAccessToken(newAccessToken);
       setRefreshToken(newRefreshToken);
-      localStorage.setItem(
+
+      nextLocalStorage.setItem(
         "accessToken",
         newAccessToken
       );
-      localStorage.setItem(
+
+      nextLocalStorage.setItem(
         "refreshToken",
         newRefreshToken
       );
@@ -83,14 +98,11 @@ export const AuthProvider: React.FC<{
     []
   );
 
-  const loginUser = () => {
-    return user;
-  };
-
   const setLoginUser = useCallback(
     (user: User) => {
       setUser(user);
-      localStorage.setItem(
+
+      nextLocalStorage.setItem(
         "user",
         JSON.stringify(user)
       );
@@ -101,9 +113,12 @@ export const AuthProvider: React.FC<{
   const clearTokens = useCallback(() => {
     setAccessToken(null);
     setRefreshToken(null);
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("user");
+
+    nextLocalStorage.removeItem("accessToken");
+
+    nextLocalStorage.removeItem("refreshToken");
+
+    nextLocalStorage.removeItem("user");
   }, []);
 
   const logout = useCallback(() => {
@@ -121,7 +136,7 @@ export const AuthProvider: React.FC<{
         clearTokens,
         setLoginUser,
         logout,
-        loginUser,
+        user,
       }}
     >
       {children}
