@@ -7,6 +7,7 @@ import Navbar from "../../../components/Navbar";
 import AutocompleteCountry, {
   Country,
 } from "@src/app/components/AutocompleteCountry";
+import Image from "next/image";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
@@ -326,12 +327,14 @@ const CreateElection: React.FC = () => {
                         />
                         {candidate.picturePreview && (
                           <div className="mt-2">
-                            <img
+                            <Image
                               src={
                                 candidate.picturePreview
                               }
                               alt={`Preview of ${candidate.name}'s picture`}
                               className="max-w-xs"
+                              width={100}
+                              height={100}
                             />
                           </div>
                         )}
@@ -355,12 +358,14 @@ const CreateElection: React.FC = () => {
                         {/* Display preview for symbol */}
                         {candidate.symbolPreview && (
                           <div className="mt-2">
-                            <img
+                            <Image
                               src={
                                 candidate.symbolPreview
                               }
                               alt={`Preview of ${candidate.name}'s symbol`}
                               className="max-w-xs"
+                              width={100}
+                              height={100}
                             />
                           </div>
                         )}

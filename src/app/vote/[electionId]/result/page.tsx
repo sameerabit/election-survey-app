@@ -10,6 +10,8 @@ import React, {
 } from "react";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
+const NEXT_PUBLIC_IMAGE_URL =
+  process.env.NEXT_PUBLIC_IMAGE_URL;
 
 interface Candidate {
   candidateId: number;
@@ -98,7 +100,7 @@ const Result: React.FC<{
                         <td className="flex items-center py-2 px-4">
                           {candidate.picture && (
                             <Image
-                              src={`${API_HOST}/uploads/${candidate.picture}`}
+                              src={`${NEXT_PUBLIC_IMAGE_URL}${candidate.picture}`}
                               alt={`${candidate.name}'s picture`}
                               className="w-10 h-10 rounded-full object-cover mr-4"
                               width={40}

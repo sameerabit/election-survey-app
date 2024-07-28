@@ -45,6 +45,8 @@ const Login: React.FC = () => {
         }
       );
 
+      console.log("response...", response);
+
       if (!response.ok) {
         throw new Error("Login failed");
       }

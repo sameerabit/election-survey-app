@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
               href="/"
               className="text-white text-2xl font-bold"
             >
-              Survey Sri Lanka
+              Referendum - Sri Lanka
             </Link>
           </div>
           <div className="flex items-center space-x-4">
@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
               href="/survey"
               className="px-3 py-2 text-sm font-medium text-white bg-indigo-500 rounded-md hover:bg-indigo-700"
             >
-              Take the Survey
+              Cast Your Vote
             </Link>
             {user?.username ? (
               <Link

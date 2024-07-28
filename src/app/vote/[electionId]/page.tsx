@@ -9,6 +9,8 @@ import { useAuth } from "@src/app/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
+const NEXT_PUBLIC_IMAGE_URL =
+  process.env.NEXT_PUBLIC_IMAGE_URL;
 
 interface Vote {
   params: { electionId: string };
@@ -29,6 +31,8 @@ const Vote: React.FC<Vote> = ({
   );
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
+
+  console.log(user);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -77,14 +81,12 @@ const Vote: React.FC<Vote> = ({
             (candidate: any) => {
               candidate["picturePreview"] =
                 candidate.picture
-                  ? API_HOST +
-                    "/uploads/" +
+                  ? NEXT_PUBLIC_IMAGE_URL +
                     candidate.picture
                   : null;
               candidate["symbolPreview"] =
                 candidate.symbol
-                  ? API_HOST +
-                    "/uploads/" +
+                  ? NEXT_PUBLIC_IMAGE_URL +
                     candidate.symbol
                   : null;
             }
@@ -209,12 +211,12 @@ const Vote: React.FC<Vote> = ({
                                   candidate.picturePreview
                                 }
                                 alt={`${candidate.name}'s picture`}
-                                className="md:w-16 md:h-16  object-cover basis-1/4"
+                                className="md:w-32 md:h-32 basis-1/4"
                                 width={64}
                                 height={64}
                               />
                             )}
-                            <span className="md:text-3xl md:min-w-96 font-semibold">
+                            <span className="md:text-3xl md:min-w-96 md:max-w-96 font-semibold">
                               {candidate.name}
                             </span>
                             {/* {candidate.symbol && (

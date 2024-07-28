@@ -13,7 +13,7 @@ const Home: React.FC = () => {
       className="min-h-screen bg-gray-100 bg-cover bg-center"
     >
       <Head>
-        <title>Survey - Sri Lanka</title>
+        <title>Referendum - Sri Lanka</title>
         <meta
           name="description"
           content="Participate in the surveys for Sri Lanka."
@@ -26,20 +26,21 @@ const Home: React.FC = () => {
       <main className="flex items-center justify-center py-20">
         <div className="w-full max-w-4xl p-8 space-y-8 bg-white rounded-lg shadow-md">
           <h1 className="text-4xl font-bold text-center text-indigo-600">
-            Survey - Sri Lanka
+            Referendum - Sri Lanka
           </h1>
+          <h2 className="text-xl font-bold text-center text-indigo-600">
+            ජනමත විචාරණය - கருத்துக் கேட்பு
+          </h2>
           <p className="text-lg text-center text-gray-700">
-            Welcome to the surveys for Sri Lanka.
-            Your opinion matters. Help us
-            understand the pulse of the nation by
-            participating in our survey.
+            Voice Your Choice: Secure, Simple, and
+            Reliable Referendum Voting
           </p>
           <div className="flex justify-center space-x-4">
             <Link
               href="/survey"
               className="px-8 py-3 text-lg font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Take the Survey
+              Cast Your Vote
             </Link>
             <Link
               href="/register"
@@ -54,16 +55,32 @@ const Home: React.FC = () => {
             </h2>
             <ul className="mt-4 space-y-2 text-center text-gray-700 list-disc list-inside">
               <li>
-                Make your voice heard on important
-                national issues.
+                Make Your Voice Heard: Your vote
+                is your voice in shaping the
+                future. Participating in the
+                referendum gives you the power to
+                influence important decisions that
+                impact your community and country.
               </li>
               <li>
-                Contribute to a comprehensive
-                understanding of public opinion.
+                Strengthen Democracy: Voting in a
+                referendum is a fundamental
+                democratic right. By
+                participating, you contribute to a
+                transparent and fair
+                decision-making process, ensuring
+                that the outcome represents the
+                will of the people.
               </li>
               <li>
-                Help shape the future of Sri
-                Lanka.
+                Drive Positive Change: Your
+                participation can lead to
+                meaningful changes and
+                improvements in policies, laws,
+                and governance. Every vote counts,
+                and your involvement can help
+                bring about the change you wish to
+                see.
               </li>
             </ul>
           </div>

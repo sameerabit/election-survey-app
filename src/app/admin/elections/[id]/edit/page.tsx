@@ -10,6 +10,8 @@ import Candidates from "@src/app/admin/candidates/page";
 import Image from "next/image";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
+const NEXT_PUBLIC_IMAGE_URL =
+  process.env.NEXT_PUBLIC_IMAGE_URL;
 
 interface EditElectionProps {
   params: {
@@ -48,14 +50,12 @@ const EditElection: React.FC<
             (candidate: any) => {
               candidate["picturePreview"] =
                 candidate.picture
-                  ? API_HOST +
-                    "/uploads/" +
+                  ? NEXT_PUBLIC_IMAGE_URL +
                     candidate.picture
                   : null;
               candidate["symbolPreview"] =
                 candidate.symbol
-                  ? API_HOST +
-                    "/uploads/" +
+                  ? NEXT_PUBLIC_IMAGE_URL +
                     candidate.symbol
                   : null;
             }
@@ -384,12 +384,14 @@ const EditElection: React.FC<
                         />
                         {candidate.picturePreview && (
                           <div className="mt-2">
-                            <img
+                            <Image
                               src={
                                 candidate.picturePreview
                               }
                               alt={`Preview of ${candidate.name}'s picture`}
                               className="max-w-xs"
+                              width={100}
+                              height={100}
                             />
                           </div>
                         )}
@@ -419,6 +421,8 @@ const EditElection: React.FC<
                               }
                               alt={`Preview of ${candidate.name}'s symbol`}
                               className="max-w-xs"
+                              width={100}
+                              height={100}
                             />
                           </div>
                         )}

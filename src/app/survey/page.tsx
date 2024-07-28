@@ -13,6 +13,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
+const NEXT_PUBLIC_IMAGE_URL =
+  process.env.NEXT_PUBLIC_IMAGE_URL;
 
 interface ElectionWithDetails extends Election {
   country: Country;
@@ -61,7 +63,7 @@ const Survey: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <Head>
-        <title>Select Survey</title>
+        <title>Select Referendum</title>
         <meta
           name="description"
           content="Survey"
@@ -72,7 +74,10 @@ const Survey: React.FC = () => {
       <main className="flex items-center justify-center py-20">
         <div className="container mx-auto">
           <div className="max-w-6xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
-            <h2 className="p-6 font-serif font-bold from-stone-950 text-3xl"></h2>
+            <h1 className="p-6 font-serif font-bold from-stone-950 text-3xl">
+              {" "}
+              Ongoing Elections
+            </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
               {elections.map((election) => (
                 <div
@@ -102,7 +107,7 @@ const Survey: React.FC = () => {
                           >
                             {candidate.picture && (
                               <Image
-                                src={`${API_HOST}/uploads/${candidate.picture}`}
+                                src={`${NEXT_PUBLIC_IMAGE_URL}/${candidate.picture}`}
                                 width={100}
                                 height={100}
                                 alt={
