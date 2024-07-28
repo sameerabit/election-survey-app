@@ -21,18 +21,17 @@ const Vote: React.FC<Vote> = ({
 }) => {
   const id = params.electionId;
 
-  const [elections, setElections] = useState([]);
   const [candidates, setCandidates] = useState(
     []
   );
   const [election, setElection] = useState(
     {} as any
   );
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (user && !user.id) {
+    if (!isAuthenticated) {
       router.push("/login");
     }
   }, []);
