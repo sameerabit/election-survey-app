@@ -16,7 +16,7 @@ const Home: React.FC = () => {
         <title>Referendum - Sri Lanka</title>
         <meta
           name="description"
-          content="Participate in the surveys for Sri Lanka."
+          content="Participate in the referendums for Sri Lanka."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
