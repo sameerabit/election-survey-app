@@ -5,10 +5,6 @@ import React, {
   useState,
 } from "react";
 import Navbar from "../components/Navbar";
-import {
-  Election,
-  Country,
-} from "@prisma/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -16,8 +12,8 @@ const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 const NEXT_PUBLIC_IMAGE_URL =
   process.env.NEXT_PUBLIC_IMAGE_URL;
 
-interface ElectionWithDetails extends Election {
-  country: Country;
+interface ElectionWithDetails {
+  country: any;
   candidates: [];
 }
 
@@ -79,7 +75,7 @@ const Survey: React.FC = () => {
               Ongoing Elections
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-              {elections.map((election) => (
+              {elections.map((election: any) => (
                 <div
                   key={election.id}
                   className="bg-white rounded-lg shadow-lg p-6"
