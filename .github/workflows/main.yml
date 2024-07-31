@@ -38,4 +38,4 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/referendum-frontend:1.0
             docker stop frontend || true
             docker rm frontend || true
-            docker run -d --name frontend -p 3000:3000 --env-file ./.env.local ${{ secrets.DOCKER_USERNAME }}/referendum-frontend:1.0
+            docker run -d --name frontend -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/referendum-frontend:1.0
