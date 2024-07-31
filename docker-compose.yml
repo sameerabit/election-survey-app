@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./
+      dockerfile: ../docker/frontend/Dockerfile
+    image: referendum-frontend:1.0
+    ports:
+      - "3001:3000"
+    env_file:
+      - ./.env.local
