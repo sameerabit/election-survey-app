@@ -7,10 +7,13 @@ import React, {
 import Navbar from "../components/Navbar";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import getConfig from "next/config";
 
-const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
+const { serverRuntimeConfig } = getConfig();
+
+const API_HOST = serverRuntimeConfig.apiHost;
 const NEXT_PUBLIC_IMAGE_URL =
-  process.env.NEXT_PUBLIC_IMAGE_URL;
+  serverRuntimeConfig.imageUrl;
 
 interface ElectionWithDetails {
   country: any;
