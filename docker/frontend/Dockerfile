@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
+COPY .env.local ./
 RUN npm cache clean --force && npm install
 
 # Copy the rest of your application code
@@ -26,6 +27,7 @@ COPY --from=build /app/public public
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/next.config.mjs ./
 COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/.env.local ./
 
 # Install only production dependencies
 RUN npm install --production
