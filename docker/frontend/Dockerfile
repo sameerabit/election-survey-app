@@ -31,7 +31,7 @@ COPY --from=build /app/node_modules ./node_modules
 RUN npm install --production
 
 # Expose the port on which the app runs
-EXPOSE 3001
+EXPOSE 3000
 
 # Start the application
 CMD ["npm", "start"]
