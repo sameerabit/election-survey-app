@@ -74,23 +74,23 @@ const Survey: React.FC = () => {
               {" "}
               Ongoing Elections
             </h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 text-black">
               {elections.map((election: any) => (
                 <div
                   key={election.id}
-                  className="rounded-lg shadow-lg p-6"
+                  className="rounded-lg shadow-lg p-6 text-black"
                 >
-                  <h2 className="text-xl font-bold mb-2">
+                  <h2 className="text-xl font-bold mb-2 text-black">
                     {election.title}
                   </h2>
-                  <p className="mb-2">
+                  <p className="mb-2 text-black">
                     <strong>Country:</strong>{" "}
                     {election.country.name}
                   </p>
-                  <p className="mb-4">
+                  <p className="mb-4 text-black">
                     {election.description}
                   </p>
-                  <div>
+                  <div className="text-black">
                     <h3 className="font-semibold mb-2">
                       Candidates:
                     </h3>
