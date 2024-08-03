@@ -183,11 +183,11 @@ const Vote: React.FC<Vote> = ({
 
       <main className="flex items-center justify-center py-20">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
-            <h1 className="text-sm font-semibold mb-4 px-6 py-4 bg-gray-200 border-b border-gray-300">
+          <div className="max-w-4xl mx-auto bg-white text-gray-700 rounded-lg overflow-hidden shadow-lg">
+            <h1 className="text-sm font-semibold text-gray-700 mb-4 px-6 py-4 bg-gray-200 border-b border-gray-300">
               Cast Your Vote
             </h1>
-            <h2 className="p-6 font-serif font-bold from-stone-950 text-3xl">
+            <h2 className="p-6 font-serif font-bold text-gray-700 text-3xl">
               {election.title}
             </h2>
 

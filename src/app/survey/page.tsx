@@ -7,6 +7,7 @@ import React, {
 import Navbar from "../components/Navbar";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "../components/LoadingAnimation";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 const NEXT_PUBLIC_IMAGE_URL =
@@ -53,7 +54,11 @@ const Survey: React.FC = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <LoadingSpinner></LoadingSpinner>
+      </div>
+    );
   }
 
   return (
