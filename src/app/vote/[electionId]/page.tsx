@@ -194,17 +194,17 @@ const Vote: React.FC<Vote> = ({
             <form className="p-6">
               {id !== null && (
                 <div className="mb-4">
-                  <label className="block text-sm font-semibold mb-1">
+                  <label className="block text-sm text-gray-700 font-semibold mb-1">
                     Select Candidate:
                   </label>
-                  <div className="my-6">
+                  <div className="my-6 text-gray-700">
                     {candidates.map(
                       (candidate: any) => (
                         <label
                           key={candidate.id}
-                          className="flex flex-row items-center space-x-2 cursor-pointer my-7"
+                          className="flex flex-row items-center space-x-2 cursor-pointer my-7 text-gray-700"
                         >
-                          <div className="flex space-x-4 items-center justify-center">
+                          <div className="flex space-x-4 items-center justify-center text-gray-700">
                             {candidate.picture && (
                               <Image
                                 src={
@@ -216,7 +216,7 @@ const Vote: React.FC<Vote> = ({
                                 height={64}
                               />
                             )}
-                            <span className="md:text-3xl md:min-w-96 md:max-w-96 font-semibold">
+                            <span className="md:text-3xl md:min-w-96 md:max-w-96 font-semibold text-gray-700">
                               {candidate.name}
                             </span>
                             {/* {candidate.symbol && (
@@ -241,7 +241,7 @@ const Vote: React.FC<Vote> = ({
                                   candidate.id
                                 )
                               }
-                              className="form-checkbox w-12 h-12"
+                              className="form-checkbox w-12 h-12 text-gray-700"
                             />
                           </div>
                         </label>
@@ -258,10 +258,10 @@ const Vote: React.FC<Vote> = ({
       {showConfirmation && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg overflow-hidden shadow-lg p-6">
-            <h2 className="text-lg font-semibold mb-4">
+            <h2 className="text-lg font-semibold mb-4 text-gray-700">
               Confirm Your Vote
             </h2>
-            <p>
+            <p className="text-gray-500">
               Are you sure you want to vote for
               this candidate?
             </p>
@@ -286,7 +286,7 @@ const Vote: React.FC<Vote> = ({
       {showMessageBox && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg overflow-hidden shadow-lg p-6">
-            <h2 className="text-lg font-semibold mb-4">
+            <h2 className="text-lg font-semibold mb-4 text-gray-700">
               Done!
             </h2>
             <p>{afterVoteMessage}</p>

@@ -90,7 +90,7 @@ const Result: React.FC<{
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="text-gray-800">
                   {data?.results.candidates.map(
                     (candidate: any) => (
                       <tr

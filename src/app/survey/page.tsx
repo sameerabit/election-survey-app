@@ -57,7 +57,7 @@ const Survey: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen font-black bg-gray-100">
+    <div className="min-h-screen font-black">
       <Head>
         <title>Select Referendum</title>
         <meta
@@ -70,7 +70,7 @@ const Survey: React.FC = () => {
       <main className="flex items-center justify-center py-20">
         <div className="container mx-auto font-black">
           <div className="max-w-6xl mx-auto rounded-lg overflow-hidden shadow-lg">
-            <h1 className="p-6 font-serif font-bold from-stone-950 text-3xl">
+            <h1 className="p-6 font-serif text-black font-bold from-stone-950 text-3xl">
               {" "}
               Ongoing Elections
             </h1>
