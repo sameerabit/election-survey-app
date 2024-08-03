@@ -72,10 +72,10 @@ const Result: React.FC<{
       <main className="flex items-center justify-center py-20">
         <div className="container mx-auto">
           <div className="max-w-6xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
-            <h1 className="text-sm font-semibold mb-4 px-6 py-4 bg-gray-200 border-b border-gray-300">
+            <h1 className="text-sm font-semibold text-gray-800 mb-4 px-6 py-4 bg-gray-200 border-b border-gray-300">
               Results - {data?.results.title}
             </h1>
-            <h2 className="p-6 font-serif font-bold from-stone-950 text-3xl">
+            <h2 className="p-6 font-serif font-bold text-gray-800 text-3xl">
               {data?.results.title}
             </h2>
             <div className="m-10">
