@@ -1,18 +1,24 @@
 "use client";
 import React from "react";
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class ErrorBoundary extends React.Component<ErrorBoundaryState> {
+  constructor(props: any) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(
+    error: any
+  ): ErrorBoundaryState {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
   }
 
-  componentDidCatch(error, info) {
+  componentDidCatch(error: any, inf: any) {
     // Example "componentStack":
     //   in ComponentThatThrows (created by App)
     //   in ErrorBoundary (created by App)
@@ -22,7 +28,9 @@ class ErrorBoundary extends React.Component {
 
   render() {
     // You can render any custom fallback UI
-    if (this.state.hasError) {
+    if (
+      (this.state as ErrorBoundaryState).hasError
+    ) {
       // You can render any custom fallback UI
       return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
