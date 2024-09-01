@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "../components/LoadingAnimation";
+import { useAuth } from "../context/AuthContext";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 const NEXT_PUBLIC_IMAGE_URL =
@@ -24,14 +25,28 @@ const Survey: React.FC = () => {
   >([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const { accessToken } = useAuth();
 
   useEffect(() => {
     const fetchElections = async () => {
       try {
         const response = await fetch(
-          `${API_HOST}/api/elections`
+          `${API_HOST}/api/elections`,
+          {
+            headers: {
+              "Content-Type": "application/json", // Necessary for JSON requests
+              Authorization: `Bearer ${accessToken}`, // Include access token in the header
+            },
+            credentials: "include",
+          }
         );
+
+        if (response.status == 401) {
+          router.push("/login");
+          return;
+        }
         const data = await response.json();
+
         setElections(data);
       } catch (error) {
         console.error(

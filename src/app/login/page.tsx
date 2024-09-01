@@ -45,8 +45,6 @@ const Login: React.FC = () => {
         }
       );
 
-      console.log("response...", response);
-
       if (!response.ok) {
         throw new Error("Login failed");
       }
@@ -56,10 +54,7 @@ const Login: React.FC = () => {
         username: username,
         id: data.userId,
       });
-      setTokens(
-        data.accessToken,
-        data.refreshToken
-      );
+      setTokens(data.accessToken);
 
       router.push("/");
     } catch (err: any) {
@@ -156,17 +151,7 @@ const Login: React.FC = () => {
                 </a>
               </div>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="text-sm">
-                <a
-                  href="register"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Click to Sign up! if you are not
-                  already registered.
-                </a>
-              </div>
-            </div>
+
             <div>
               <button
                 disabled={loading}
@@ -179,6 +164,21 @@ const Login: React.FC = () => {
                   ? "Signing in..."
                   : "Sign in"}
               </button>
+            </div>
+            <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
+            <div className="block items-center justify-between">
+              <div className="block items-center justify-between">
+                <label htmlFor="">
+                  If you don't have an account.
+                  Please register.
+                </label>
+                <a
+                  href="register"
+                  className="block px-4 py-2 text-md text-center font-medium text-white bg-indigo-800 border rounded-md shadow-sm hover:bg-indigo-800"
+                >
+                  REGISTER
+                </a>
+              </div>
             </div>
           </form>
         </div>

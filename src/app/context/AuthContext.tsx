@@ -17,10 +17,7 @@ export type User = {
 interface AuthContextType {
   accessToken: string | null;
   refreshToken: string | null;
-  setTokens: (
-    accessToken: string,
-    refreshToken: string
-  ) => void;
+  setTokens: (accessToken: string) => void;
   clearTokens: () => void;
   logout: () => void;
   setLoginUser: (user: User) => void;
@@ -38,8 +35,6 @@ export const AuthProvider: React.FC<{
   const [accessToken, setAccessToken] = useState<
     string | null
   >(null);
-  const [refreshToken, setRefreshToken] =
-    useState<string | null>(null);
   const [user, setUser] = useState<User | null>(
     null
   );
@@ -47,47 +42,39 @@ export const AuthProvider: React.FC<{
     useState(false);
 
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Load tokens and user from local storage on initial load
-    const storedAccessToken =
-      sessionStorage &&
-      sessionStorage.getItem("accessToken");
-    const storedRefreshToken =
-      sessionStorage &&
-      sessionStorage.getItem("refreshToken");
-    const storedUser =
-      sessionStorage &&
-      sessionStorage.getItem("user");
 
-    if (
-      storedAccessToken &&
-      storedRefreshToken &&
-      storedUser
-    ) {
-      setAccessToken(storedAccessToken);
-      setRefreshToken(storedRefreshToken);
-      setUser(JSON.parse(storedUser));
-      setIsAuthenticated(true);
-    }
+    const checkAuth = async () => {
+      try {
+        const storedAccessToken =
+          sessionStorage &&
+          sessionStorage.getItem("accessToken");
+        const storedUser =
+          sessionStorage &&
+          sessionStorage.getItem("user");
+        if (storedAccessToken && storedUser) {
+          setAccessToken(storedAccessToken);
+          setUser(JSON.parse(storedUser));
+          setIsAuthenticated(true);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
   }, []);
 
   const setTokens = useCallback(
-    (
-      newAccessToken: string,
-      newRefreshToken: string
-    ) => {
+    (newAccessToken: string) => {
       setAccessToken(newAccessToken);
-      setRefreshToken(newRefreshToken);
       sessionStorage &&
         sessionStorage.setItem(
           "accessToken",
           newAccessToken
-        );
-      sessionStorage &&
-        sessionStorage.setItem(
-          "refreshToken",
-          newRefreshToken
         );
     },
     []
@@ -108,11 +95,9 @@ export const AuthProvider: React.FC<{
 
   const clearTokens = useCallback(() => {
     setAccessToken(null);
-    setRefreshToken(null);
     sessionStorage &&
       sessionStorage.removeItem("accessToken");
-    sessionStorage &&
-      sessionStorage.removeItem("refreshToken");
+
     sessionStorage &&
       sessionStorage.removeItem("user");
   }, []);
@@ -128,7 +113,6 @@ export const AuthProvider: React.FC<{
     <AuthContext.Provider
       value={{
         accessToken,
-        refreshToken,
         setTokens,
         clearTokens,
         setLoginUser,
@@ -137,7 +121,7 @@ export const AuthProvider: React.FC<{
         isAuthenticated,
       }}
     >
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
