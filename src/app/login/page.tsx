@@ -169,7 +169,7 @@ const Login: React.FC = () => {
             <div className="block items-center justify-between">
               <div className="block items-center justify-between">
                 <label htmlFor="">
-                  If you don't have an account.
+                  If you donot have an account.
                   Please register.
                 </label>
                 <a
