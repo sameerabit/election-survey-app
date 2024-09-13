@@ -42,12 +42,12 @@ const Home: React.FC = () => {
             >
               Cast Your Vote
             </Link>
-            <Link
+            {/* <Link
               href="/register"
               className="px-6 py-3 text-sm sm:text-base md:text-lg font-medium text-white bg-gray-600 border border-transparent rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 text-center"
             >
               Register
-            </Link>
+            </Link> */}
           </div>
           <div className="pt-6 border-t border-gray-200">
             <h2 className="text-xl sm:text-2xl font-bold text-center text-gray-900">

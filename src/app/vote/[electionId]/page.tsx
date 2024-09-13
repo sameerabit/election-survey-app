@@ -7,6 +7,9 @@ import Navbar from "../../components/Navbar";
 import Image from "next/image";
 import { useAuth } from "@src/app/context/AuthContext";
 import { useRouter } from "next/navigation";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+
+const fpPromise = FingerprintJS.load();
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 const NEXT_PUBLIC_IMAGE_URL =
@@ -32,12 +35,18 @@ const Vote: React.FC<Vote> = ({
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
 
-  console.log(user);
-
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/login");
-    }
+    const fpPromise = FingerprintJS.load();
+
+    fpPromise
+      .then((fp) => fp.get())
+      .then((result) => {
+        const fingerprint = result.visitorId;
+        localStorage.setItem(
+          "fingerprint",
+          fingerprint
+        );
+      });
   }, []);
 
   const [
@@ -126,7 +135,9 @@ const Vote: React.FC<Vote> = ({
           body: JSON.stringify({
             electionId: id,
             candidateId: selectedCandidate,
-            userId: user?.id, // Replace with actual user ID from authentication context
+            fingerprint: localStorage.getItem(
+              "fingerprint"
+            ), // Replace with actual user ID from authentication context
           }),
         }
       );
@@ -202,7 +213,7 @@ const Vote: React.FC<Vote> = ({
                       (candidate: any) => (
                         <label
                           key={candidate.id}
-                          className="flex flex-row items-center space-x-2 cursor-pointer my-7 text-gray-700"
+                          className="items-center space-x-2 cursor-pointer my-7 text-gray-700"
                         >
                           <div className="flex space-x-4 items-center justify-center text-gray-700">
                             {candidate.picture && (
@@ -211,12 +222,12 @@ const Vote: React.FC<Vote> = ({
                                   candidate.picturePreview
                                 }
                                 alt={`${candidate.name}'s picture`}
-                                className="md:w-32 md:h-32 basis-1/4"
+                                className="md:w-32 md:h-32 basis-1/4 md:max-w-24 object-contain"
                                 width={64}
                                 height={64}
                               />
                             )}
-                            <span className="md:text-3xl md:min-w-96 md:max-w-96 font-semibold text-gray-700">
+                            <span className="md:text-3xl w-full font-semibold text-gray-700">
                               {candidate.name}
                             </span>
                             {/* {candidate.symbol && (
@@ -241,7 +252,7 @@ const Vote: React.FC<Vote> = ({
                                   candidate.id
                                 )
                               }
-                              className="form-checkbox w-12 h-12 text-gray-700"
+                              className="form-checkbox text-center w-12 h-12 text-gray-700"
                             />
                           </div>
                         </label>

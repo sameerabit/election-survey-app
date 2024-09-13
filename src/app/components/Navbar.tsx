@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
               >
                 Cast Your Vote
               </Link>
-              {user?.username ? (
+              {/* {user?.username ? (
                 <>
                   <Link
                     href="#profile"
@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
                 >
                   Login
                 </Link>
-              )}
+              )} */}
             </div>
             <div className="sm:hidden">
               <button
@@ -87,7 +87,7 @@ const Navbar: React.FC = () => {
             >
               Cast Your Vote
             </Link>
-            {user?.username ? (
+            {/* {user?.username ? (
               <>
                 <Link
                   href="#profile"
@@ -110,7 +110,7 @@ const Navbar: React.FC = () => {
               >
                 Login
               </Link>
-            )}
+            )} */}
           </div>
         )}
       </div>

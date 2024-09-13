@@ -16,7 +16,6 @@ export type User = {
 
 interface AuthContextType {
   accessToken: string | null;
-  refreshToken: string | null;
   setTokens: (accessToken: string) => void;
   clearTokens: () => void;
   logout: () => void;
@@ -39,7 +38,7 @@ export const AuthProvider: React.FC<{
     null
   );
   const [isAuthenticated, setIsAuthenticated] =
-    useState(false);
+    useState(true);
 
   const router = useRouter();
   const [loading, setLoading] = useState(true);
