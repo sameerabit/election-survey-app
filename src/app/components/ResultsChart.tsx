@@ -150,14 +150,14 @@ const ResultsChart: React.FC<{
       <h2 className="text-xl font-bold mb-4">
         Visualization
       </h2>
-      <div className="md:flex items-center justify-center space-x-10">
-        <div className="flex items-start justify-start">
+      <div className="flex-row items-center justify-center space-x-10">
+        <div className="flex items-start justify-start p-10">
           <Bar
             data={chartData}
             options={options as any}
           />
         </div>
-        <div>
+        <div className="flex items-start justify-start p-10">
           <Pie
             data={pieChartData}
             options={pieChartOptions as any}

@@ -99,14 +99,14 @@ const Survey: React.FC = () => {
                   key={election.id}
                   className="rounded-lg shadow-lg p-6 text-black"
                 >
-                  <h2 className="text-xl font-bold mb-2 text-black">
+                  <h2 className="text-xl mb-2 text-black">
                     {election.title}
                   </h2>
-                  <p className="mb-2 text-black">
+                  <p className="mb-2 text-black font-normal">
                     <strong>Country:</strong>{" "}
                     {election.country.name}
                   </p>
-                  <p className="mb-4 text-black">
+                  <p className="mb-4 text-black font-medium">
                     {election.description}
                   </p>
                   <div className="text-black">
