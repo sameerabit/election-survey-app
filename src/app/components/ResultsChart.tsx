@@ -150,7 +150,7 @@ const ResultsChart: React.FC<{
       <h2 className="text-xl font-bold mb-4">
         Visualization
       </h2>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="md:grid md:grid-cols-2 gap-4">
         <div className="flex justify-center items-center">
           <Bar
             data={chartData}
