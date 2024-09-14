@@ -87,11 +87,8 @@ const Home: React.FC = () => {
           </div>
         </div>
       </main>
-      <div className="flex bg-white justify-center py-10 px-4 sm:px-6 lg:px-8">
-        <h3 className="text-3xl">
-          හොර ජන්ද දාන්න එපා ! අවංක වෙන්න. 😂
-        </h3>
-        <p>
+      <div className="flex bg-white justify-center flex-row items-start">
+        <p className="w-full max-w-4xl py-6 font-serif">
           We are committed to protecting your
           privacy and ensuring compliance with the
           General Data Protection Regulation
