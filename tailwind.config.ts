@@ -14,6 +14,15 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+
+      colors: {
+        "custom-purple": "#552C5B",
+      },
+      opacity: {
+        "10": "0.1",
+        "90": "0.9",
+        // Add other custom values as needed
+      },
     },
   },
   plugins: [],

@@ -208,7 +208,7 @@ const Register: React.FC = () => {
                 type="checkbox"
                 checked={formData.agree_terms}
                 onChange={handleChange}
-                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                className="w-4 h-4 text-custom-purple border-gray-300 rounded focus:ring-indigo-500"
               />
               <label
                 htmlFor="agree_terms"

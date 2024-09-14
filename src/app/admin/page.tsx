@@ -19,7 +19,7 @@ const Admin: React.FC = () => {
 
       <main className="flex items-center justify-center py-20">
         <div className="w-full max-w-4xl p-8 space-y-8 bg-white rounded-lg shadow-md">
-          <h1 className="text-4xl font-bold text-center text-indigo-600">
+          <h1 className="text-4xl font-bold text-center text-custom-purple">
             Admin Dashboard
           </h1>
           <p className="text-lg text-center text-gray-700">
@@ -30,7 +30,7 @@ const Admin: React.FC = () => {
           <div className="flex justify-center space-x-4">
             <Link
               href="/admin/elections"
-              className="px-8 py-3 text-lg font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="px-8 py-3 text-lg font-medium text-white bg-custom-purple border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               View Elections
             </Link>

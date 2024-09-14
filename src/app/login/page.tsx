@@ -133,7 +133,7 @@ const Login: React.FC = () => {
                   id="remember_me"
                   name="remember_me"
                   type="checkbox"
-                  className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                  className="w-4 h-4 text-custom-purple border-gray-300 rounded focus:ring-indigo-500"
                 />
                 <label
                   htmlFor="remember_me"
@@ -145,7 +145,7 @@ const Login: React.FC = () => {
               <div className="text-sm">
                 <a
                   href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                  className="font-medium text-custom-purple hover:text-indigo-500"
                 >
                   Forgot your password?
                 </a>
@@ -155,7 +155,7 @@ const Login: React.FC = () => {
             <div>
               <button
                 disabled={loading}
-                className={`flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
+                className={`flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-custom-purple border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
                   loading &&
                   "opacity-50 cursor-not-allowed"
                 }`}

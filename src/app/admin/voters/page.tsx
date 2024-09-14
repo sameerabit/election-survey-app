@@ -18,7 +18,7 @@ const Voters: React.FC = () => {
 
       <main className="flex items-center justify-center py-20">
         <div className="w-full max-w-4xl p-8 space-y-8 bg-white rounded-lg shadow-md">
-          <h1 className="text-4xl font-bold text-center text-indigo-600">
+          <h1 className="text-4xl font-bold text-center text-custom-purple">
             Voters
           </h1>
           <p className="text-lg text-center text-gray-700">

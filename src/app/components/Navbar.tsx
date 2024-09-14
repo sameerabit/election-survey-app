@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
+import Image from "next/image";
 
 const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,7 +14,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-indigo-600">
+    <nav className="bg-custom-purple">
       <div className="max-w-7xl py-2 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -21,14 +22,20 @@ const Navbar: React.FC = () => {
               href="/"
               className="text-white text-xs sm:text-sm md:text-base lg:text-2xl font-bold"
             >
-              Referendum - Sri Lanka
+              <Image
+                src="/logo.png"
+                width={300}
+                height={100}
+                alt={"Vote Globe"}
+                className="mr-2"
+              />
             </Link>
           </div>
           <div className="flex items-center space-x-4 mx-2">
             <div className="hidden sm:block">
               <Link
                 href="/survey"
-                className="px-3 py-2 m-2  text-xs sm:text-sm md:text-base lg:text-xl font-medium text-white bg-indigo-500 rounded-md hover:bg-indigo-700"
+                className="px-3 py-2 m-2  text-xs sm:text-sm md:text-base lg:text-xl font-medium text-white bg-black rounded-md hover:bg-black"
               >
                 Cast Your Vote
               </Link>
@@ -83,7 +90,7 @@ const Navbar: React.FC = () => {
           <div className="sm:hidden">
             <Link
               href="/survey"
-              className="block px-3 py-2 text-base font-medium text-center text-white bg-indigo-500 rounded-md hover:bg-indigo-700"
+              className="block px-3 py-2 text-base font-medium text-center text-white bg-black rounded-md hover:bg-black"
             >
               Cast Your Vote
             </Link>
