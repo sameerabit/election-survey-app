@@ -19,6 +19,40 @@ const Home: React.FC = () => {
           content="Participate in the referendums for Sri Lanka."
         />
         <link rel="icon" href="/favicon.ico" />
+        <meta
+          property="og:title"
+          content="VoteGlobe.COM"
+        />
+        <meta
+          property="og:description"
+          content="Make Your Voice Heard: Your vote is your voice in shaping the future. Participating in the referendum gives you the power to influence important decisions that impact your community and country.
+Strengthen Democracy: Voting in a referendum is a fundamental democratic right. By participating, you contribute to a transparent and fair decision-making process, ensuring that the outcome represents the will of the people.
+Drive Positive Change: Your participation can lead to meaningful changes and improvements in policies, laws, and governance. Every vote counts, and your involvement can help bring about the change you wish to see."
+        />
+        <meta
+          property="og:url"
+          content="https://voteglobe.com/"
+        />
+        <meta
+          property="og:image"
+          content="https://voteglobe.com//bg/vote.jpg"
+        />
+        <meta
+          property="og:image:alt"
+          content="Vote Globe"
+        />
+        <meta
+          property="og:image:type"
+          content="image/jpeg"
+        />
+        <meta
+          property="og:image:width"
+          content="1200"
+        />
+        <meta
+          property="og:image:height"
+          content="630"
+        ></meta>
       </Head>
 
       <Navbar />
