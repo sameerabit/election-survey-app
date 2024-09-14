@@ -150,20 +150,21 @@ const ResultsChart: React.FC<{
       <h2 className="text-xl font-bold mb-4">
         Visualization
       </h2>
-      <div className="flex-row items-center justify-center space-x-10">
-        <div className="flex items-start justify-start p-10">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="flex justify-center items-center">
           <Bar
             data={chartData}
             options={options as any}
           />
         </div>
-        <div className="flex items-start justify-start p-10">
+        <div className="flex justify-center items-center">
           <Pie
             data={pieChartData}
             options={pieChartOptions as any}
           />
         </div>
       </div>
+      <div className="grid grid-cols-4 gap-4"></div>
 
       {/* Type assertion to satisfy types */}
     </div>
