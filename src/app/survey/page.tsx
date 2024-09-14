@@ -118,7 +118,7 @@ const Survey: React.FC = () => {
                         (candidate: any) => (
                           <li
                             key={candidate.id}
-                            className="mb-2 flex items-center mx-2"
+                            className="mb-2 flex items-center mx-2 flex-row"
                           >
                             {candidate.picture && (
                               <Image
@@ -131,7 +131,7 @@ const Survey: React.FC = () => {
                                 className="w-10 h-10 rounded-full mr-2"
                               />
                             )}
-                            <span>
+                            <span className="font-semibold">
                               {candidate.name}
                             </span>
                           </li>
