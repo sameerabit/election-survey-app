@@ -2,7 +2,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import Navbar from "./components/Navbar";
-import Image from "next/image";
+import Footer from "./components/Footer";
 
 const Home: React.FC = () => {
   return (
@@ -87,22 +87,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </main>
-      <div className="flex bg-white justify-center flex-row items-start">
-        <p className="w-full max-w-4xl py-6 font-serif">
-          We are committed to protecting your
-          privacy and ensuring compliance with the
-          General Data Protection Regulation
-          (GDPR). We want to assure you that our
-          organization does not store any personal
-          data in our databases. We only collect
-          and use data in accordance with
-          applicable laws and regulations, and we
-          are dedicated to safeguarding your
-          information. If you have any questions
-          or concerns about your data, please feel
-          free to contact us.
-        </p>
-      </div>
+      <Footer />
     </div>
   );
 };
