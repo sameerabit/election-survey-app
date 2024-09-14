@@ -144,7 +144,7 @@ const Vote: React.FC<Vote> = ({
 
       if (!response.ok) {
         throw new Error(
-          "You have voted before. Thanks for voting!"
+          "හොර ජන්ද දාන්න නේද ආවෙ?. You have voted before. Thanks for voting!"
         );
       }
 
@@ -298,9 +298,11 @@ const Vote: React.FC<Vote> = ({
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg overflow-hidden shadow-lg p-6">
             <h2 className="text-lg font-semibold mb-4 text-gray-700">
-              Done!
+              Hi!
             </h2>
-            <p>{afterVoteMessage}</p>
+            <p className="font-bold text-black">
+              {afterVoteMessage}
+            </p>
             <div className="mt-4 flex justify-end space-x-2">
               <button
                 onClick={handleSeeReults}
