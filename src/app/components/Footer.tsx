@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
             safeguarding your information. If you
             have any questions or concerns about
             your data, please feel free to contact
-            us.
+            us via my email virajamara@gmail.com
           </p>
         </div>
       </div>
