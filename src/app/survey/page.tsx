@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "../components/LoadingAnimation";
 import { useAuth } from "../context/AuthContext";
+import Link from "next/link";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 const NEXT_PUBLIC_IMAGE_URL =
@@ -141,20 +142,24 @@ const Survey: React.FC = () => {
                   </div>
                   <div className="flex mt-4 text-sm text-gray-600 justify-between">
                     <span>
-                      <strong>
-                        Last Voting Date:
-                      </strong>{" "}
+                      <strong>Until:</strong>{" "}
                       {new Date(
                         election.endDate
                       ).toLocaleDateString()}
                     </span>
+                    <Link
+                      href={`vote/${election.id}/result`}
+                      className="mt-4 mx-2 bg-blue-500 text-white px-4 py-2 rounded text-right"
+                    >
+                      Results
+                    </Link>
                     <button
                       onClick={() =>
                         handleVoteClick(
                           election.id
                         )
                       }
-                      className="mt-4 mx-2 bg-blue-500 text-white px-4 py-2 rounded text-right"
+                      className="mt-4 mx-2 bg-green-500 text-white px-4 py-2 rounded text-right"
                     >
                       Vote
                     </button>

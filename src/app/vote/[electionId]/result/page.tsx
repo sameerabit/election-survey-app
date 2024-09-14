@@ -79,14 +79,27 @@ const Result: React.FC<{
               {data?.results.title}
             </h2>
             <div className="m-10">
+              <h6>
+                <span className="font-semibold text-3xl">
+                  Current Total Votes:
+                </span>
+                <span className="font-bold p-2 text-3xl">
+                  {data?.total}
+                </span>
+              </h6>
+            </div>
+            <div className="m-10">
               <table className="table-auto w-full border-collapse">
                 <thead className="bg-gray-100">
                   <tr className="text-left font-semibold text-gray-700">
                     <th className="border-b border-gray-300 py-2 px-4">
                       Candidates
                     </th>
-                    <th className="border-b border-gray-300 py-2 px-4">
+                    <th className="border-b border-gray-300 py-2 px-4 text-right">
                       Vote Count
+                    </th>
+                    <th className="border-b border-gray-300 py-2 px-4 text-right">
+                      %
                     </th>
                   </tr>
                 </thead>
@@ -107,16 +120,27 @@ const Result: React.FC<{
                               height={40}
                             />
                           )}
-                          <span className="text-lg font-medium">
+                          <span className="text-lg font-medium text-right">
                             {candidate.name}
                           </span>
                         </td>
-                        <td className="py-2 px-4">
+                        <td className="py-2 px-4 text-righ text-right">
                           <span className="text-lg font-medium">
                             {
                               candidate._count
                                 .Vote
                             }
+                          </span>
+                        </td>
+                        <td className="py-2 px-4 text-right">
+                          <span className="text-lg font-medium">
+                            {(
+                              (candidate._count
+                                .Vote /
+                                data?.total) *
+                              100
+                            ).toFixed(2)}
+                            %
                           </span>
                         </td>
                       </tr>
@@ -135,16 +159,6 @@ const Result: React.FC<{
               )
               // Render the chart with fetched data
             )}
-            <div className="m-10">
-              <h6>
-                <span className="font-semibold">
-                  Total Number of Votes:
-                </span>
-                <span className="font-bold p-2">
-                  {data?.total}
-                </span>
-              </h6>
-            </div>
           </div>
         </div>
       </main>
