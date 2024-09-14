@@ -8,6 +8,8 @@ import Image from "next/image";
 import { useAuth } from "@src/app/context/AuthContext";
 import { useRouter } from "next/navigation";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import RegisterRecaptcha from "@src/app/components/RegisterRecaptcha";
 
 const fpPromise = FingerprintJS.load();
 
@@ -33,6 +35,8 @@ const Vote: React.FC<Vote> = ({
     {} as any
   );
   const { user, isAuthenticated } = useAuth();
+  const [disableSubmit, setDisableSubmit] =
+    useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -113,7 +117,9 @@ const Vote: React.FC<Vote> = ({
     }
   }, [id]);
 
-  const handleConfirmVote = async () => {
+  const handleConfirmVote = async (
+    token: string
+  ) => {
     if (
       id === null ||
       selectedCandidate === null
@@ -135,9 +141,10 @@ const Vote: React.FC<Vote> = ({
           body: JSON.stringify({
             electionId: id,
             candidateId: selectedCandidate,
-            fingerprint: localStorage.getItem(
+            checksum: localStorage.getItem(
               "fingerprint"
             ), // Replace with actual user ID from authentication context
+            token: token,
           }),
         }
       );
@@ -277,12 +284,23 @@ const Vote: React.FC<Vote> = ({
               this candidate?
             </p>
             <div className="mt-4 flex justify-end space-x-2">
-              <button
-                onClick={handleConfirmVote}
-                className="bg-blue-500 text-white px-4 py-2 rounded"
-              >
-                Confirm
-              </button>
+              <GoogleReCaptchaProvider reCaptchaKey="6LeW7i0qAAAAAGTRxgu4rVQx_effh6ErwvU4-04j">
+                <RegisterRecaptcha
+                  handleSubmit={handleConfirmVote}
+                  disableSubmit={disableSubmit}
+                />
+              </GoogleReCaptchaProvider>
+              {/* {!disableSubmit ? (
+                <button
+                  onClick={handleConfirmVote}
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                >
+                  Confirm
+                </button>
+              ) : (
+                "Loading..."
+              )} */}
+
               <button
                 onClick={handleCancelVote}
                 className="bg-gray-300 text-black px-4 py-2 rounded"

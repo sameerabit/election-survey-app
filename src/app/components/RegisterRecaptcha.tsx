@@ -9,18 +9,16 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 interface RegisterRecaptchaType {
   handleSubmit: (token: string) => void;
   disableSubmit: boolean;
-  formData: any;
 }
 
 const RegisterRecaptcha: React.FC<
   RegisterRecaptchaType
-> = ({
-  handleSubmit,
-  disableSubmit,
-  formData,
-}) => {
+> = ({ handleSubmit, disableSubmit }) => {
   const { executeRecaptcha } =
     useGoogleReCaptcha();
+  if (executeRecaptcha) {
+    disableSubmit = false;
+  }
 
   // Create an event handler so you can call the verification on button click event or form submit
   const handleReCaptchaVerify =
@@ -31,14 +29,12 @@ const RegisterRecaptcha: React.FC<
         );
         return;
       }
-      console.log("Hiii");
       const token = await executeRecaptcha(
         "voteglobe"
       );
-      console.log(formData);
-      handleSubmit({ ...formData, token });
+      handleSubmit(token);
       // Do whatever you want with the token
-    }, [executeRecaptcha, formData]);
+    }, [executeRecaptcha]);
 
   const handleButtonClick = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -54,7 +50,7 @@ const RegisterRecaptcha: React.FC<
       onClick={handleButtonClick}
       className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-custom-purple border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
     >
-      Register
+      Confirm
     </button>
   );
 };

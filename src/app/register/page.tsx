@@ -229,7 +229,7 @@ const Register: React.FC = () => {
                 <RegisterRecaptcha
                   handleSubmit={handleSubmit}
                   disableSubmit={disableSubmit}
-                  formData={formData}
+                  // formData={formData}
                 />
               </GoogleReCaptchaProvider>
             </div>
