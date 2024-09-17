@@ -54,6 +54,10 @@ const Result: React.FC<{
       }
     }
     getResults();
+    const interval = setInterval(() => {
+      getResults();
+      console.log("Hii");
+    }, 10000); // 10000ms = 10 seconds
   }, [id]);
 
   return (
