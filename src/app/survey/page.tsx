@@ -153,7 +153,7 @@ const Survey: React.FC = () => {
                     >
                       Results
                     </Link>
-                    <button
+                    {/* <button
                       onClick={() =>
                         handleVoteClick(
                           election.id
@@ -162,7 +162,7 @@ const Survey: React.FC = () => {
                       className="mt-4 mx-2 bg-green-500 text-white px-4 py-2 rounded text-right"
                     >
                       Vote
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               ))}
